@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Cryptography;
 
 namespace ConsoleNet.Controllers
 {
@@ -6,28 +8,20 @@ namespace ConsoleNet.Controllers
     [Route("[controller]")]
     public class NewsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<NewsController> _logger;
+        private readonly Random _random;
 
         public NewsController(ILogger<NewsController> logger)
         {
             _logger = logger;
+            _random = new Random();
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet]
+        [Route("GetRNG/{amount}")]
+        public IEnumerable<int> GetRNG(int amount, int maxValue = 10)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return Enumerable.Range(1, amount).Select(x => _random.Next(maxValue));
         }
     }
 }
