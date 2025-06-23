@@ -2,7 +2,7 @@
 
 namespace ConsoleNet.Entities;
 
-public abstract class BaseEntity
+public class BaseEntity
 {
     [BsonId]
     [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]

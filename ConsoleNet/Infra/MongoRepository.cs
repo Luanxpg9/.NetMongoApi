@@ -23,28 +23,19 @@ public class MongoRepository<T> : IMongoRepository<T> where T : BaseEntity
         _model = database.GetCollection<T>(typeof(T).Name.ToLower());
     }
 
+    public T Get(string id) => _model.Find(e => e.Id == id).FirstOrDefault();
+
+    // Get all
+    public List<T> Get() => _model.Find(e => true).ToList();
+
     public T Create(T entity)
     {
-        throw new NotImplementedException();
+        _model.InsertOne(entity);
+
+        return entity;
     }
 
-    public void Delete(string id)
-    {
-        throw new NotImplementedException();
-    }
+    public void Update(string id, T entity) => _model.ReplaceOne(e => e.Id == id, entity);
 
-    public List<T> Get()
-    {
-        throw new NotImplementedException();
-    }
-
-    public T Get(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Update(string id, T entity)
-    {
-        throw new NotImplementedException();
-    }
+    public void Delete(string id) => _model.DeleteOne(e => e.Id == id);
 }

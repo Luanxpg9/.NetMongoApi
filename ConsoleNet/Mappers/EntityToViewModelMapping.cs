@@ -4,9 +4,9 @@ using ConsoleNet.Entities.Enums;
 
 namespace ConsoleNet.Mappers;
 
-public class Mapping : Profile
+public class EntityToViewModelMapping : Profile
 {
-    public Mapping()
+    public EntityToViewModelMapping()
     {
         CreateMap<NewsViewModel, News>().ReverseMap();
     }

@@ -1,10 +1,8 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace ConsoleNet.Entities.Enums;
+﻿namespace ConsoleNet.Entities.Enums;
 
 public class NewsViewModel
 {
+    public string Id { get; set; } = string.Empty;
     public string Hat { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
