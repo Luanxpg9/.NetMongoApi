@@ -1,8 +1,6 @@
 using ConsoleNet.Entities.Enums;
 using ConsoleNet.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Cryptography;
 
 namespace ConsoleNet.Controllers
 {

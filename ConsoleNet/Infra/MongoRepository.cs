@@ -23,10 +23,10 @@ public class MongoRepository<T> : IMongoRepository<T> where T : BaseEntity
         _model = database.GetCollection<T>(typeof(T).Name.ToLower());
     }
 
-    public T Get(string id) => _model.Find(e => e.Id == id).FirstOrDefault();
+    public T Get(string id) => _model.Find(e => e.Id == id && e.Deleted == false).FirstOrDefault();
 
     // Get all
-    public List<T> Get() => _model.Find(e => true).ToList();
+    public List<T> Get() => _model.Find(e => e.Deleted == false).ToList();
 
     public T Create(T entity)
     {
@@ -37,5 +37,10 @@ public class MongoRepository<T> : IMongoRepository<T> where T : BaseEntity
 
     public void Update(string id, T entity) => _model.ReplaceOne(e => e.Id == id, entity);
 
-    public void Delete(string id) => _model.DeleteOne(e => e.Id == id);
+    public void Delete(string id) 
+    {
+        var news = Get(id);
+        news.Deleted = true;
+        _model.ReplaceOne(news => news.Id == id, news);
+    }
 }
